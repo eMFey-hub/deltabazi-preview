@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>دلتا بازی</title>
+  <script src="https://cdn.jsdelivr.net/npm/moment-jalaali@0.9.2/moment-jalaali.js"></script> <!-- کتابخانه تاریخ شمسی -->
   <style>
     body {
       background-color: #111;
@@ -16,25 +17,55 @@
       margin: 0;
       direction: rtl;
       text-align: center;
+      flex-direction: column;
     }
+
     h1 {
       font-size: 2em;
       animation: blink 1.2s infinite;
     }
+
+    .datetime {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
     }
 
-    /* تنظیم اندازه فونت برای صفحه‌های کوچک */
     @media (max-width: 600px) {
       h1 {
-        font-size: 1.5em; /* کاهش اندازه فونت برای صفحات کوچک */
+        font-size: 4em;
+      }
+      .datetime {
+        font-size: 2em; /* اندازه بزرگتر برای ساعت و تاریخ در موبایل */
+      }
+    }
+
+    @media (min-width: 600px) and (max-width: 1024px) {
+      h1 {
+        font-size: 3em;
       }
     }
   </style>
 </head>
 <body>
   <h1>این سایت بزودی شروع به فعالیت می‌کند!</h1>
+  <div class="datetime" id="datetime"></div>
+
+  <script>
+    function updateDateTime() {
+      const now = moment(); // زمان جاری به میلادی
+      const jalaaliDate = now.format('jYYYY/jMM/jDD'); // تبدیل به تاریخ شمسی
+      const time = now.format('HH:mm:ss'); // ساعت و دقیقه و ثانیه به میلادی
+
+      document.getElementById('datetime').textContent = `تاریخ شمسی: ${jalaaliDate} | ساعت: ${time}`;
+    }
+
+    setInterval(updateDateTime, 1000); // هر ۱ ثانیه یکبار ساعت و تاریخ رو آپدیت کنه
+    updateDateTime(); // اجرای اولیه
+  </script>
 </body>
 </html>
